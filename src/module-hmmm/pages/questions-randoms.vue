@@ -75,6 +75,18 @@
           </template>
           </el-table-column>
         </el-table>
+        <div style="text-align:right; margin-top: 20px">
+          <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="form.page"
+          :page-sizes="[1, 3, 5, 7]"
+          :page-size="form.pagesize"
+          layout="total, sizes, prev, pager, next, jumper"
+          background
+          :total="counts">
+        </el-pagination>
+        </div>
     </el-card>
     <QuestionsPreview :showQuestionsPreview.sync="showQuestionsPreview" :id="id"/>
   </div>
@@ -95,7 +107,7 @@ export default {
       tableData: [],
       form: {
         page: 1,
-        pagesize: 10,
+        pagesize: 5,
         keyword: ''
       },
       showQuestionsPreview: false,
@@ -149,6 +161,15 @@ export default {
     handlePreview (id) {
       this.id = id
       this.showQuestionsPreview = true
+    },
+    handleSizeChange (val) {
+      this.form.pagesize = val
+      this.page = 1
+      this.getRandomsList()
+    },
+    handleCurrentChange (val) {
+      this.form.page = val
+      this.getRandomsList()
     }
   }
 }
