@@ -36,6 +36,7 @@
             prop="questionType"
             label="题型"
            >
+           {{ setQuestionType }}
           </el-table-column>
           <el-table-column
             prop="questionIDs"
@@ -82,6 +83,7 @@
 <script>
 import { randoms, removeRandoms } from '@/api/hmmm/questions.js'
 import QuestionsPreview from './questions-preview.vue'
+import { questionType } from '@/api/hmmm/constants.js'
 export default {
   name: 'QuestionsRandoms',
   components: {
@@ -98,6 +100,19 @@ export default {
       },
       showQuestionsPreview: false,
       id: 0
+    }
+  },
+  computed: {
+    setQuestionType () {
+      let str = ''
+      this.tableData.forEach(item => {
+        questionType.forEach(qItem => {
+          if (+item.questionType === qItem.value) {
+            str = qItem.label
+          }
+        })
+      })
+      return str
     }
   },
   created () {
