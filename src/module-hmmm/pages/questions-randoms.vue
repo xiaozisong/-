@@ -155,6 +155,9 @@ export default {
         const res = await removeRandoms({ id })
         console.log(res)
         this.$message.success('删除题组成功')
+        if (this.tableData.length === 1 && this.page > 1) {
+          this.page--
+        }
         this.getRandomsList()
       })
     },
